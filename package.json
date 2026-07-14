@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspaces",
-    "build": "npm run build --workspaces",
+    "build": "npm run frontend:build",
     "install:all": "npm install",
     "backend:dev": "npm run dev --workspace=backend",
     "backend:start": "npm start --workspace=backend",
