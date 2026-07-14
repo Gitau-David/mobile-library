@@ -23,8 +23,23 @@ export default function Login() {
                 headers: { 'Content-Type': 'application/json' },
                 body:    JSON.stringify({ username, password }),
             });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Login failed');
+
+            const text = await res.text();
+            let data = null;
+            try {
+                data = JSON.parse(text);
+            } catch {
+                data = null;
+            }
+
+            if (!res.ok) {
+                throw new Error(data?.message || text || 'Login failed');
+            }
+
+            if (!data?.token) {
+                throw new Error('Login response did not contain a token.');
+            }
+
             setToken(data.token);
         } catch (error) {
             setToast({ message: error.message, type: 'error' });
